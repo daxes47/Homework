@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -72,6 +73,9 @@ func enterNumbers() ([]float64, error) {
 func calculation(operation string, numbers []float64) float64 {
 	var result float64
 	var preResult float64
+	sort.Slice(numbers, func(i, j int) bool {
+		return numbers[i] < numbers[j]
+	})
 	switch operation {
 	case "AVG":
 		for _, value := range numbers {
@@ -83,6 +87,7 @@ func calculation(operation string, numbers []float64) float64 {
 			result = result + value
 		}
 	case "MED":
+		fmt.Println("Упорядоченный ряд:", numbers)
 		if len(numbers)%2 != 0 {
 			result = numbers[int(math.Round(float64(len(numbers))/2))-1]
 		} else if len(numbers)%2 == 0 {
